@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class XPBar : MonoBehaviour
+public class ProgressBar : MonoBehaviour
 {
     [SerializeField] Image m_slider;
     [SerializeField] TextMeshProUGUI m_sliderText;

@@ -6,7 +6,7 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] Player m_player;
 
-    [SerializeField] XPBar m_xpBar;
+    [SerializeField] ProgressBar m_xpBar;
     [SerializeField] StatButtons m_statButtons;    
     [SerializeField] TopBar m_topBar;
 
