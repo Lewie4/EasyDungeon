@@ -33,8 +33,8 @@ public class GameManager : Singleton<GameManager>
 
     public void UpdateXPBar(Player.PlayerStats playerStats)
     {
-        int xpIntoLevel = playerStats.xp.Amount - GetXPForLevel(playerStats.level.Amount);
-        int xpForNext = GetXPForLevel(playerStats.level.Amount + 1) - GetXPForLevel(playerStats.level.Amount);
+        int xpIntoLevel = playerStats.xp.Amount - GetXPForLevel(playerStats.level.Amount - 1);
+        int xpForNext = GetXPForLevel(playerStats.level.Amount) - GetXPForLevel(playerStats.level.Amount - 1);
 
         Debug.Log(xpIntoLevel + "/" + xpForNext);
         m_xpBar.ChangeSliderValue(xpIntoLevel, xpForNext);

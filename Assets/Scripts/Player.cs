@@ -223,7 +223,7 @@ public class Player : MonoBehaviour
     {
         m_stats.xp.ChangeAmount(amount);
 
-        while (m_stats.xp.Amount >= GameManager.GetXPForLevel(m_stats.level.Amount + 1))
+        while (m_stats.xp.Amount >= GameManager.GetXPForLevel(m_stats.level.Amount))
         {
             LevelUp();
         }
