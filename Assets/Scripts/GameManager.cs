@@ -10,7 +10,6 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] StatButtons m_statButtons;    
     [SerializeField] TopBar m_topBar;
 
-    [SerializeField] int m_energyForAction;
     static readonly float m_xpPower = 2;
 
     public static int GetXPForLevel(int level)
@@ -52,12 +51,7 @@ public class GameManager : Singleton<GameManager>
 
     public void UpdateStatButton(Stat statValue)
     {
-        UpdateStatButton(statValue.StatType, (int)statValue.CurrentStat, (int)statValue.MaxStat);
-    }
-
-    private void UpdateStatButton(StatEnum stat, int current, int max)
-    {
-        m_statButtons.SetupButton(stat, current, max);
+        m_statButtons.SetupButton(statValue);
     }
 
     public void UpdateFullTopBar(Player.PlayerStats playerStats)
@@ -69,7 +63,7 @@ public class GameManager : Singleton<GameManager>
         UpdateTopBar(TopBar.UI.HardKey, playerStats.hardKey);
     }
 
-    private void UpdateTopBar(TopBar.UI uiElement, Value value, Sprite sprite = null)
+    public void UpdateTopBar(TopBar.UI uiElement, Value value, Sprite sprite = null)
     {
         m_topBar.UpdateUI(uiElement, value.Amount.ToString(), sprite);
     }
@@ -78,7 +72,7 @@ public class GameManager : Singleton<GameManager>
     {
         Player.PlayerStats playerStats = m_player.GetStats();
 
-        if(playerStats.energy.CurrentStat >= m_energyForAction)
+        if(!playerStats.Dead)
         {
             m_player.AttackTarget(enemy);
         }

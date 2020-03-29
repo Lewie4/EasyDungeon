@@ -32,7 +32,10 @@ public class Enemy : MonoBehaviour
 
         if(m_stats.health.CurrentStat <= 0)
         {
-            Die();
+            if (!m_stats.Dead)
+            {
+                Die();
+            }
         }
         else
         {
@@ -42,6 +45,7 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        m_stats.SetDead();
         GameManager.Instance.GivePlayerXP(m_stats.xp.Amount);
     }
 

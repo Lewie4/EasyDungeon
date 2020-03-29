@@ -12,29 +12,36 @@ public class StatButton : MonoBehaviour
     [SerializeField] TextMeshProUGUI m_sliderText;
 
     bool m_alwaysMax;
-    int m_max;
+    float m_max;
 
-    public void Setup(StatButtonValues values, int currentValue, int maxValue)
+    public void Setup(StatInfo statInfo, Stat stat)
     {
-        m_image.sprite = values.statSprite;
+        if (statInfo.Icon != null)
+        {
+            m_image.sprite = statInfo.Icon;
+        }
+        else
+        {
+            m_image.color = statInfo.Colour;
+        }
 
-        m_name.text = values.statName;
+        m_name.text = statInfo.ShortName;
 
-        m_alwaysMax = values.alwaysMax;
-        ChangeSliderValue(currentValue, maxValue);
+        m_alwaysMax = stat.AlwaysMax;
+        ChangeSliderValue(stat.CurrentStat, stat.MaxStat);
 
-        m_slider.color = values.statColour;
+        m_slider.color = statInfo.Colour;
     }
 
-    public void ChangeSliderValue(int current, int max = -1)
+    public void ChangeSliderValue(float current, float max = -1)
     {
         if(max > 0)
         {
             m_max = max;
         }
 
-        m_slider.fillAmount = m_alwaysMax ? 1 : (float)current/m_max;
+        m_slider.fillAmount = m_alwaysMax ? 1 : current/m_max;
 
-        m_sliderText.text = m_alwaysMax ? m_max.ToString() : current + "/" + m_max;
+        m_sliderText.text = m_alwaysMax ? ((int)m_max).ToString() : (int)current + "/" + (int)m_max;
     }
 }

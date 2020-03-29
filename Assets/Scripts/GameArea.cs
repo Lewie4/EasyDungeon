@@ -17,6 +17,7 @@ public class GameArea : MonoBehaviour
     [SerializeField] Vector2Int m_gridSize;
     [SerializeField] List<ButtonSpawnChance> m_buttons;
     [SerializeField] Vector2Int m_maxButtonSize;
+    [SerializeField] bool m_stopBigSquares;
 
     float m_gridWidth;
     Vector2 m_unitSize;
@@ -37,7 +38,7 @@ public class GameArea : MonoBehaviour
         m_rect.sizeDelta = new Vector2(m_gridWidth, m_gridWidth);
         m_rect.localPosition = new Vector3(0, (m_mainUIBelow - m_mainUIAbove) / 2, 0);
 
-        m_unitSize = new Vector2(m_gridWidth / m_gridSize.x, m_gridWidth / m_gridSize.y);
+        m_unitSize = new Vector2(m_gridWidth / (m_gridSize.x + 2), m_gridWidth / (m_gridSize.y + 2));   //+2 to account for boarder
 
         SetupDungeon();
     }
@@ -54,49 +55,60 @@ public class GameArea : MonoBehaviour
                 {
                     var newButton = Instantiate(PickButton(), transform).transform;
 
-                    int width = Random.Range(0, m_maxButtonSize.x);
-                    int height = Random.Range(0, m_maxButtonSize.y);
+                    var buttonSize = GetButtonSize();
 
                     //Check space is clear
-                    for (int heightCheck = height; heightCheck >= 0; heightCheck--)
+                    for (int heightCheck = buttonSize.y; heightCheck >= 0; heightCheck--)
                     {
                         if (j + heightCheck >= m_gridSize.y)
                         {
-                            height = heightCheck - 1;
+                            buttonSize.y = heightCheck - 1;
                         }
                         else
                         {
-                            for (int widthCheck = width; widthCheck >= 0; widthCheck--)
+                            for (int widthCheck = buttonSize.x; widthCheck >= 0; widthCheck--)
                             {
                                 if (i + widthCheck >= m_gridSize.x)
                                 {
-                                    width = widthCheck - 1;
+                                    buttonSize.x = widthCheck - 1;
                                 }
                                 else if (spaceCheck[i + widthCheck, j + heightCheck])
                                 {
-                                    height = heightCheck - 1;
+                                    buttonSize.y = heightCheck - 1;
                                 }
                             }
                         }
                     }
                     
                     //Reserve space
-                    for (int resWidth = 0; resWidth <= width; resWidth++)
+                    for (int resWidth = 0; resWidth <= buttonSize.x; resWidth++)
                     {
-                        for (int resHeight = 0; resHeight <= height; resHeight++)
+                        for (int resHeight = 0; resHeight <= buttonSize.y; resHeight++)
                         {
                             spaceCheck[i + resWidth, j + resHeight] = true;
                         }
                     }
                     var buttonRect = newButton.GetComponent<RectTransform>();
 
-                    buttonRect.sizeDelta = new Vector2(m_unitSize.x * (width + 1), m_unitSize.y * (height + 1));
-                    buttonRect.anchoredPosition = new Vector3(i * m_unitSize.x, -j * m_unitSize.y, 0);
+                    buttonRect.sizeDelta = new Vector2(m_unitSize.x * (buttonSize.x + 1), m_unitSize.y * (buttonSize.y + 1));
+                    buttonRect.anchoredPosition = new Vector3((i + 1) * m_unitSize.x, -(j + 1) * m_unitSize.y, 0);  //+1 to account for boarder
 
                     Debug.Log(i + ", " + j + "\n" + SpaceCheckToString(spaceCheck));
                 }
             }
         }
+    }
+
+    private Vector2Int GetButtonSize()
+    {
+        Vector2Int buttonSize = new Vector2Int(Random.Range(0, m_maxButtonSize.x), Random.Range(0, m_maxButtonSize.y));
+
+        if (m_stopBigSquares && (buttonSize.x == buttonSize.y && buttonSize.x == m_maxButtonSize.x - 1 && buttonSize.y == m_maxButtonSize.y - 1))
+        {
+            buttonSize = GetButtonSize();
+        }
+
+        return buttonSize;
     }
 
     private GameObject PickButton()

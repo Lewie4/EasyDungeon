@@ -2,22 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class StatButtonValues
-{
-    public Sprite statSprite;
-    public string statName;
-    public Color statColour;
-    public bool alwaysMax;
-}
-
 public class StatButtons : MonoBehaviour
 {
     [System.Serializable]
     public class StatButtonSetup
     {
         public StatButton statButton;
-        public StatButtonValues statButtonValues;
+        public StatInfo statInfo;
     }
 
     [SerializeField] StatButtonSetup m_healthButton;
@@ -28,47 +19,43 @@ public class StatButtons : MonoBehaviour
 
     public void Start()
     {
-        SetupButton(StatEnum.Health, 100, 100);
-        SetupButton(StatEnum.Attack, 50, 50);
-        SetupButton(StatEnum.Defence, 10, 10);
-        SetupButton(StatEnum.Energy, 500, 500);
-        SetupButton(StatEnum.Recovery, 75, 75);
+
     }
 
-    public void SetupButton(StatEnum stat, int current, int max)
+    public void SetupButton(Stat stat)
     {
-        switch (stat)
+        switch (stat.StatType)
         {
             case StatEnum.Health:
                 {
-                    SetupButton(m_healthButton, current, max);
+                    SetupButton(m_healthButton, stat);
                     break;
                 }
             case StatEnum.Attack:
                 {
-                    SetupButton(m_attackButton, current, max);
+                    SetupButton(m_attackButton, stat);
                     break;
                 }
             case StatEnum.Defence:
                 {
-                    SetupButton(m_defenceButton, current, max);
+                    SetupButton(m_defenceButton, stat);
                     break;
                 }
             case StatEnum.Energy:
                 {
-                    SetupButton(m_energyButton, current, max);
+                    SetupButton(m_energyButton, stat);
                     break;
                 }
             case StatEnum.Recovery:
                 {
-                    SetupButton(m_recoveryButton, current, max);
+                    SetupButton(m_recoveryButton, stat);
                     break;
                 }
         }
     }
 
-    private void SetupButton(StatButtonSetup button, int current, int max)
+    private void SetupButton(StatButtonSetup button, Stat stat)
     {
-        button.statButton.Setup(button.statButtonValues, current, max);
+        button.statButton.Setup(button.statInfo, stat);
     }
 }

@@ -21,6 +21,7 @@ public class Stat
     //ADD BASE VALUE SO WE CAN CALCULATE MAX FROM BASE + ARMOUR + TALENT POINTS
     public float MaxStat { get { return maxStat; } }
     public float CurrentStat { get { return currentStat; } }
+    public bool AlwaysMax {  get { return alwaysMax; } }
 
     [HideInInspector] public UnityEvent OnStatChange;
 
@@ -28,24 +29,28 @@ public class Stat
     [SerializeField] private float maxStat;
     [SerializeField] private float currentStat;
     [SerializeField] float startRecoveryTime;
+    [SerializeField] bool alwaysMax;
 
     private bool isRecovering;
     private float startRecoveryProgress;
 
     public float GetPercentage()
     {
-        return CurrentStat / MaxStat;
+        return alwaysMax ? 1 : CurrentStat / MaxStat;
     }
 
     public void ChangeCurrentStat(float amount)
     {
-        currentStat = Mathf.Clamp(currentStat + amount, 0, maxStat);
-
-        OnStatChange.Invoke();
-
-        if(amount < 0)
+        if (!alwaysMax)
         {
-            ResetRecoveryProgress();
+            currentStat = Mathf.Clamp(currentStat + amount, 0, maxStat);
+
+            OnStatChange.Invoke();
+
+            if (amount < 0)
+            {
+                ResetRecoveryProgress();
+            }
         }
     }
 
@@ -53,33 +58,44 @@ public class Stat
     {
         maxStat = amount;
 
+        if(alwaysMax)
+        {
+            currentStat = maxStat;
+        }
+
         OnStatChange.Invoke();
     }
 
     public void RecoverStat(float amount)
     {
-        if(isRecovering)
+        if (!alwaysMax)
         {
-            if(CurrentStat < MaxStat)
+            if (isRecovering)
             {
-                ChangeCurrentStat(amount);
-            }           
-        }
-        else
-        {
-            startRecoveryProgress += Time.deltaTime / startRecoveryTime;
+                if (CurrentStat < MaxStat)
+                {
+                    ChangeCurrentStat(amount);
+                }
+            }
+            else
+            {
+                startRecoveryProgress += Time.deltaTime / startRecoveryTime;
 
-            if(startRecoveryProgress >= 1)
-            {
-                isRecovering = true;
+                if (startRecoveryProgress >= 1)
+                {
+                    isRecovering = true;
+                }
             }
         }
     }
 
     private void ResetRecoveryProgress()
     {
-        startRecoveryProgress = 0;
-        isRecovering = false;
+        if (!alwaysMax)
+        {
+            startRecoveryProgress = 0;
+            isRecovering = false;
+        }
     }
 }
 
@@ -104,8 +120,11 @@ public class Stats
     public Stat defence;
     public Stat energy;
     public Stat recovery;
+    public bool Dead { get { return dead; } }
 
     public Value xp;
+
+    private bool dead;
 
     public void SetCurrentToMax()
     {
@@ -118,9 +137,17 @@ public class Stats
 
     public void RecoverStats()
     {
-        float amount = recovery.CurrentStat * Time.deltaTime;
-        health.RecoverStat(amount);
-        energy.RecoverStat(amount);
+        if (!dead)
+        {
+            float amount = recovery.CurrentStat * Time.deltaTime;
+            health.RecoverStat(amount);
+            energy.RecoverStat(amount);
+        }
+    }
+
+    public void SetDead(bool isDead = true)
+    {
+        dead = isDead;
     }
 }
 
@@ -207,6 +234,7 @@ public class Player : MonoBehaviour
     private void LevelUp()
     {
         m_stats.level.ChangeAmount(1);
+        GameManager.Instance.UpdateTopBar(TopBar.UI.Level, m_stats.level);
     }
 
     public void AttackTarget(Enemy target)
@@ -226,7 +254,7 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-
+        m_stats.SetDead();
     }
 
     public bool TryTakeStat(StatEnum statType, float amount)
@@ -238,7 +266,7 @@ public class Player : MonoBehaviour
             return false;
         }
 
-        stat.ChangeCurrentStat(amount);
+        stat.ChangeCurrentStat(-amount);
         return true;
     }
 
