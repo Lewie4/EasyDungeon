@@ -8,11 +8,7 @@ public class StatButton : MonoBehaviour
 {
     [SerializeField] Image m_image;
     [SerializeField] TextMeshProUGUI m_name;
-    [SerializeField] Image m_slider;
-    [SerializeField] TextMeshProUGUI m_sliderText;
-
-    bool m_alwaysMax;
-    float m_max;
+    [SerializeField] ProgressBar m_progressBar;
 
     public void Setup(StatInfo statInfo, Stat stat)
     {
@@ -27,21 +23,8 @@ public class StatButton : MonoBehaviour
 
         m_name.text = statInfo.ShortName;
 
-        m_alwaysMax = stat.AlwaysMax;
-        ChangeSliderValue(stat.CurrentStat, stat.MaxStat);
-
-        m_slider.color = statInfo.Colour;
-    }
-
-    public void ChangeSliderValue(float current, float max = -1)
-    {
-        if(max > 0)
-        {
-            m_max = max;
-        }
-
-        m_slider.fillAmount = m_alwaysMax ? 1 : current/m_max;
-
-        m_sliderText.text = m_alwaysMax ? ((int)m_max).ToString() : (int)current + "/" + (int)m_max;
-    }
+        m_progressBar.SetAlwaysMax(stat.AlwaysMax);
+        m_progressBar.ChangeSliderValue(stat.CurrentStat, stat.MaxStat);
+        m_progressBar.SetProgressBarColour(statInfo.Colour);
+    }     
 }
