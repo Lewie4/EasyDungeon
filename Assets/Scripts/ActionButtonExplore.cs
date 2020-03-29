@@ -11,7 +11,7 @@ public class ActionButtonExplore : ActionButtonReward
 
     public override void OnClick()
     {
-        if(GameManager.Instance.TryTakeStat(StatEnum.Energy, -m_cost))
+        if(GameManager.Instance.TryTakeStat(StatEnum.Energy, m_cost))
         {
             TakeDamage();            
         }

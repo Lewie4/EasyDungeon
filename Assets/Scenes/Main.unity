@@ -1071,6 +1071,7 @@ MonoBehaviour:
       maxStat: 100
       currentStat: 100
       startRecoveryTime: 1
+      alwaysMax: 0
     attack:
       OnStatChange:
         m_PersistentCalls:
@@ -1081,6 +1082,7 @@ MonoBehaviour:
       maxStat: 15
       currentStat: 15
       startRecoveryTime: 0
+      alwaysMax: 1
     defence:
       OnStatChange:
         m_PersistentCalls:
@@ -1091,6 +1093,7 @@ MonoBehaviour:
       maxStat: 5
       currentStat: 5
       startRecoveryTime: 0
+      alwaysMax: 1
     energy:
       OnStatChange:
         m_PersistentCalls:
@@ -1101,6 +1104,7 @@ MonoBehaviour:
       maxStat: 500
       currentStat: 500
       startRecoveryTime: 1
+      alwaysMax: 0
     recovery:
       OnStatChange:
         m_PersistentCalls:
@@ -1111,10 +1115,11 @@ MonoBehaviour:
       maxStat: 75
       currentStat: 75
       startRecoveryTime: 0
+      alwaysMax: 1
     xp:
       amount: 0
     level:
-      amount: 0
+      amount: 1
     hardCurrency:
       amount: 0
     softCurrency:
@@ -1534,39 +1539,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_healthButton:
     statButton: {fileID: 7224601537276621457}
-    statButtonValues:
-      statSprite: {fileID: 0}
-      statName: HP
-      statColour: {r: 0, g: 1, b: 0, a: 1}
-      alwaysMax: 0
+    statInfo: {fileID: 11400000, guid: 910187eefbce0be46a58e1602c3f9431, type: 2}
   m_attackButton:
     statButton: {fileID: 887634216}
-    statButtonValues:
-      statSprite: {fileID: 0}
-      statName: ATK
-      statColour: {r: 1, g: 0, b: 0, a: 1}
-      alwaysMax: 1
+    statInfo: {fileID: 11400000, guid: c88078d185fbe924aa64283ba80099e4, type: 2}
   m_defenceButton:
     statButton: {fileID: 1237700642}
-    statButtonValues:
-      statSprite: {fileID: 0}
-      statName: DEF
-      statColour: {r: 0, g: 0, b: 1, a: 1}
-      alwaysMax: 1
+    statInfo: {fileID: 11400000, guid: 46e506e18060c744a93f61bc101128da, type: 2}
   m_energyButton:
     statButton: {fileID: 1291358543}
-    statButtonValues:
-      statSprite: {fileID: 0}
-      statName: NRG
-      statColour: {r: 1, g: 1, b: 0, a: 1}
-      alwaysMax: 0
+    statInfo: {fileID: 11400000, guid: ecb7fe7205e19e04aabc5d7807461774, type: 2}
   m_recoveryButton:
     statButton: {fileID: 1068073906}
-    statButtonValues:
-      statSprite: {fileID: 0}
-      statName: REC
-      statColour: {r: 1, g: 0, b: 1, a: 1}
-      alwaysMax: 1
+    statInfo: {fileID: 11400000, guid: 43bbef293e6053840b459fadb2d957b7, type: 2}
 --- !u!114 &1007414472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2563,7 +2548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2986,7 +2971,6 @@ MonoBehaviour:
   m_xpBar: {fileID: 283944357}
   m_statButtons: {fileID: 1007414471}
   m_topBar: {fileID: 1446015371}
-  m_energyForAction: 5
 --- !u!4 &1520361110
 Transform:
   m_ObjectHideFlags: 0
@@ -3203,7 +3187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 1, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
