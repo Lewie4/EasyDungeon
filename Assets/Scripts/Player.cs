@@ -18,18 +18,19 @@ public class Stat
 {
     public StatEnum StatType{ get { return statType; } }
 
-    //ADD BASE VALUE SO WE CAN CALCULATE MAX FROM BASE + ARMOUR + TALENT POINTS
-    public float MaxStat { get { return maxStat; } }
-    public float CurrentStat { get { return currentStat; } }
+    public float MaxStat { get { return baseStat + talentStat + gearStat; } }
+    public float CurrentStat { get { return alwaysMax ? MaxStat : currentStat; } }
     public bool AlwaysMax {  get { return alwaysMax; } }
 
     [HideInInspector] public UnityEvent OnStatChange;
 
     [SerializeField] private StatEnum statType;
-    [SerializeField] private float maxStat;
+    [SerializeField] private float baseStat;
+    [SerializeField] private float talentStat;
+    [SerializeField] private float gearStat;
     [SerializeField] private float currentStat;
-    [SerializeField] float startRecoveryTime;
-    [SerializeField] bool alwaysMax;
+    [SerializeField] private float startRecoveryTime;
+    [SerializeField] private bool alwaysMax;
 
     private bool isRecovering;
     private float startRecoveryProgress;
@@ -43,7 +44,7 @@ public class Stat
     {
         if (!alwaysMax)
         {
-            currentStat = Mathf.Clamp(currentStat + amount, 0, maxStat);
+            currentStat = Mathf.Clamp(currentStat + amount, 0, MaxStat);
 
             OnStatChange.Invoke();
 
@@ -54,16 +55,14 @@ public class Stat
         }
     }
 
-    public void SetMaxStat(float amount)
+    public float SetGearStat(float amount)
     {
-        maxStat = amount;
-
-        if(alwaysMax)
-        {
-            currentStat = maxStat;
-        }
+        float currentGearStat = gearStat;
+        gearStat = amount;
 
         OnStatChange.Invoke();
+
+        return currentGearStat;
     }
 
     public void RecoverStat(float amount)
@@ -163,6 +162,21 @@ public class Player : MonoBehaviour
 
         public Value softKey;
         public Value hardKey;
+
+        public PlayerGear m_gear;
+
+        public void UpdateGearStats()
+        {
+            var gearStats = m_gear.GetTotalStats();
+
+            float diffHealth = health.SetGearStat(gearStats.m_health);
+            float diffAttack = attack.SetGearStat(gearStats.m_attack);
+            float diffDefence = health.SetGearStat(gearStats.m_defence);
+            float diffEnergy = health.SetGearStat(gearStats.m_energy);
+            float diffRecovery = health.SetGearStat(gearStats.m_recovery);
+
+            Debug.Log(string.Format("Gear Stat Change: \n Health: {0} \n Attack: {1} \n Defence: {2} \n Energy: {3} \n Recovery: {4}", diffHealth, diffAttack, diffDefence, diffEnergy, diffRecovery));
+        }
     }
 
     [SerializeField] PlayerStats m_stats;
@@ -275,6 +289,12 @@ public class Player : MonoBehaviour
     public void AddXP()
     {
         GainXP(1);
+    }
+
+    [ContextMenu("Refresh Gear")]
+    public void RefreshGear()
+    {
+        m_stats.UpdateGearStats();
     }
 #endif
 }

@@ -35,9 +35,12 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       statType: 1
-      maxStat: 100
+      baseStat: 100
+      talentStat: 0
+      gearStat: 0
       currentStat: 0
       startRecoveryTime: 1
+      alwaysMax: 0
     attack:
       OnStatChange:
         m_PersistentCalls:
@@ -45,9 +48,12 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       statType: 2
-      maxStat: 5
+      baseStat: 5
+      talentStat: 0
+      gearStat: 0
       currentStat: 0
       startRecoveryTime: 0
+      alwaysMax: 0
     defence:
       OnStatChange:
         m_PersistentCalls:
@@ -55,9 +61,12 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       statType: 3
-      maxStat: 0
+      baseStat: 0
+      talentStat: 0
+      gearStat: 0
       currentStat: 0
       startRecoveryTime: 0
+      alwaysMax: 0
     energy:
       OnStatChange:
         m_PersistentCalls:
@@ -65,9 +74,12 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       statType: 4
-      maxStat: 0
+      baseStat: 0
+      talentStat: 0
+      gearStat: 0
       currentStat: 0
       startRecoveryTime: 0
+      alwaysMax: 0
     recovery:
       OnStatChange:
         m_PersistentCalls:
@@ -75,9 +87,12 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       statType: 5
-      maxStat: 50
+      baseStat: 30
+      talentStat: 0
+      gearStat: 0
       currentStat: 50
       startRecoveryTime: 0
+      alwaysMax: 0
     xp:
       amount: 50
 --- !u!1001 &6645572406125149009

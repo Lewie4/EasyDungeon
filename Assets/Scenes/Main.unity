@@ -716,6 +716,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_slider: {fileID: 521140928}
   m_sliderText: {fileID: 1112715400}
+  m_numberOfDecimals: 0
 --- !u!1 &343811990
 GameObject:
   m_ObjectHideFlags: 0
@@ -1041,6 +1042,7 @@ GameObject:
   m_Component:
   - component: {fileID: 615931852}
   - component: {fileID: 615931851}
+  - component: {fileID: 615931853}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1068,7 +1070,9 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       statType: 1
-      maxStat: 100
+      baseStat: 100
+      talentStat: 0
+      gearStat: 0
       currentStat: 100
       startRecoveryTime: 1
       alwaysMax: 0
@@ -1079,7 +1083,9 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       statType: 2
-      maxStat: 15
+      baseStat: 15
+      talentStat: 0
+      gearStat: 0
       currentStat: 15
       startRecoveryTime: 0
       alwaysMax: 1
@@ -1090,7 +1096,9 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       statType: 3
-      maxStat: 5
+      baseStat: 5
+      talentStat: 0
+      gearStat: 0
       currentStat: 5
       startRecoveryTime: 0
       alwaysMax: 1
@@ -1101,7 +1109,9 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       statType: 4
-      maxStat: 500
+      baseStat: 500
+      talentStat: 0
+      gearStat: 0
       currentStat: 500
       startRecoveryTime: 1
       alwaysMax: 0
@@ -1112,7 +1122,9 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       statType: 5
-      maxStat: 75
+      baseStat: 75
+      talentStat: 0
+      gearStat: 0
       currentStat: 75
       startRecoveryTime: 0
       alwaysMax: 1
@@ -1128,6 +1140,7 @@ MonoBehaviour:
       amount: 0
     hardKey:
       amount: 0
+    m_gear: {fileID: 615931853}
 --- !u!4 &615931852
 Transform:
   m_ObjectHideFlags: 0
@@ -1142,6 +1155,79 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &615931853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615931850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289082fb49c9b1149b63249c3660c55d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_outfit:
+    weapon:
+      m_slot: 0
+      m_seed: 0
+      m_level: 0
+      m_stats:
+        m_health: 0
+        m_attack: 0
+        m_defence: 0
+        m_energy: 0
+        m_recovery: 0
+    head:
+      m_slot: 0
+      m_seed: 0
+      m_level: 0
+      m_stats:
+        m_health: 0
+        m_attack: 0
+        m_defence: 0
+        m_energy: 0
+        m_recovery: 0
+    chest:
+      m_slot: 0
+      m_seed: 0
+      m_level: 0
+      m_stats:
+        m_health: 0
+        m_attack: 0
+        m_defence: 0
+        m_energy: 0
+        m_recovery: 0
+    feet:
+      m_slot: 0
+      m_seed: 0
+      m_level: 0
+      m_stats:
+        m_health: 0
+        m_attack: 0
+        m_defence: 0
+        m_energy: 0
+        m_recovery: 0
+    ring:
+      m_slot: 0
+      m_seed: 0
+      m_level: 0
+      m_stats:
+        m_health: 0
+        m_attack: 0
+        m_defence: 0
+        m_energy: 0
+        m_recovery: 0
+    neck:
+      m_slot: 0
+      m_seed: 0
+      m_level: 0
+      m_stats:
+        m_health: 0
+        m_attack: 0
+        m_defence: 0
+        m_energy: 0
+        m_recovery: 0
 --- !u!1 &654219198
 GameObject:
   m_ObjectHideFlags: 0
